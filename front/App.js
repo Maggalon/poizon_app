@@ -19,9 +19,8 @@ import Home from "./App/Screens/Home";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    appFont: require("./assets/fonts/Judson-Regular.ttf"),
-    appFontBold: require("./assets/fonts/Judson-Bold.ttf"),
-    appFontItalic: require("./assets/fonts/Judson-Italic.ttf"),
+    appFont: require("./assets/fonts/Roboto-Regular.ttf"),
+    appFontBold: require("./assets/fonts/Roboto-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return null;

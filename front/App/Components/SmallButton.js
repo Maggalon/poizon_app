@@ -3,12 +3,12 @@ import React, { useRef } from "react";
 import Colors from "../../assets/Shared/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function Button({ title, onPress, width }) {
+export default function Button({ title, onPress, width, height }) {
   return (
-    <View style={{width: width || '95%',}}>
+    <View style={{width: width || '95%', }}>
       <TouchableOpacity onPress={onPress}>
         <LinearGradient
-          style={styles.button_gradient}
+          style={[styles.button_gradient, {height: height || 45}]}
           colors={[Colors.gradient_left, Colors.gradient_right]}
         >
           <Text style={styles.button_text}>{title}</Text>
@@ -20,7 +20,6 @@ export default function Button({ title, onPress, width }) {
 
 const styles = StyleSheet.create({
   button_gradient: {
-    height: 45,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
