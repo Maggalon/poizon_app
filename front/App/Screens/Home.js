@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
+import Carousel from '../Components/Home/Carousel'
 
 
 export default function Home() {
   return (
-    <View >
-      <Text>Home</Text>
-    </View>
+    <ScrollView>
+      <Carousel/>
+    </ScrollView>
   )
 }

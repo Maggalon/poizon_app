@@ -30,17 +30,16 @@ export default function App() {
     // <Login/>
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-      <TabNavigation />
-    </NavigationContainer>
+        <TabNavigation />
+      </NavigationContainer>
     </SafeAreaView>
-    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent:'center',
+    backgroundColor: "#fff",
+    justifyContent: "center",
   },
 });
