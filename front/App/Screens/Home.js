@@ -6,7 +6,7 @@ import GoodList from '../Components/Home/GoodList'
 
 export default function Home() {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Carousel/>
       <GoodList/>
     </ScrollView>

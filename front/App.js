@@ -6,13 +6,11 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
-import Colors from "./assets/Shared/Colors";
-import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import Login from "./App/Screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./App/Navigation/TabNavigation";
-import Home from "./App/Screens/Home";
+import "react-native-gesture-handler";
 
 // editable для TextInput - можно редачить или нет
 //оч полезно для изменения профиля

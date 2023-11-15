@@ -10,8 +10,10 @@ import React from "react";
 import Colors from "../../../assets/Shared/Colors";
 import Star from "../../../assets/star-for-rate.svg";
 import SmallButton from "../SmallButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GoodList() {
+  const navigation = useNavigation();
   const allGoods = [
     {
       id: "01",
@@ -56,11 +58,14 @@ export default function GoodList() {
       price: "15₽",
     },
   ];
+  const addToBasket = () => {
+    console.log("add to basket");
+  };
   const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity style={styles.good_item}>
+      <TouchableOpacity style={styles.good_item} onPress={() => navigation.navigate('Good', {goodName: item.label})}>
         <Image source={item.image} style={styles.image_for_good} />
-        <View style={{width: '90%', display: 'flex', gap: 2}}>
+        <View style={{ width: "90%", display: "flex", gap: 2 }}>
           <Text style={styles.label_text}>{item.label}</Text>
           <View style={styles.rate_view}>
             <Star />
@@ -69,10 +74,11 @@ export default function GoodList() {
           <Text style={styles.price_text}>{item.price}</Text>
         </View>
 
-        <SmallButton title={"В корзину"} width={"100%"} height={30} />
+        <SmallButton title={"В корзину"} width={"100%"} height={30} onPress={addToBasket}/>
       </TouchableOpacity>
     );
   };
+  
 
   return (
     <View style={{ alignItems: "center", margin: 10 }}>
@@ -86,11 +92,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.white,
     width: 182,
-    height: 270,
+    height: 'auto',
     borderRadius: 10,
     margin: 8,
     padding: 10,
-     overflow:'scroll'
+    overflow: "scroll",
   },
   image_for_good: {
     width: 140,
@@ -99,22 +105,22 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     marginBottom: 5,
   },
-  label_text:{
-    fontFamily: 'appFont',
-    fontSize:17.4,
+  label_text: {
+    fontFamily: "appFont",
+    fontSize: 18,
   },
   rate_text: {
-    fontFamily: 'appFontBold',
-    fontSize:17,
+    fontFamily: "appFontBold",
+    fontSize: 17,
   },
   rate_view: {
     flexDirection: "row",
     gap: 5,
     marginBottom: 5,
-    alignItems:'center'
+    alignItems: "center",
   },
   price_text: {
-    fontFamily: 'appFontBold',
+    fontFamily: "appFontBold",
     fontSize: 16,
   },
 });
