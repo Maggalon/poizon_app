@@ -63,7 +63,7 @@ export default function GoodList() {
   };
   const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity style={styles.good_item} onPress={() => navigation.navigate('Good', {goodName: item.label})}>
+      <TouchableOpacity style={styles.good_item} onPress={() => navigation.navigate('Good', {item: item})}>
         <Image source={item.image} style={styles.image_for_good} />
         <View style={{ width: "90%", display: "flex", gap: 2 }}>
           <Text style={styles.label_text}>{item.label}</Text>
