@@ -1,14 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import Search from "../Screens/Search";
+import GoodList from "../Components/Home/GoodList";
+import ScreenForGoods from "../Screens/ScreenForGoods";
 import Good from "../Screens/Good";
-import Home from "../Screens/Home";
 
 const Stack = createStackNavigator();
-export default function HomeStackNavigation() {
+export default function SeacrhStackNavigation() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="HomeScreen" component={Home} />
+      <Stack.Screen name="SearchScreen" component={Search} />
+      <Stack.Screen name="CategoryItems" component={ScreenForGoods} />
       <Stack.Screen name="Good" component={Good} />
     </Stack.Navigator>
   );

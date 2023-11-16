@@ -16,6 +16,7 @@ import BasketInactive from '../../assets/inactive-icons/basket-inactive.svg'
 import ProfileInactive from '../../assets/inactive-icons/profile-inactive.svg'
 import SearchHeader from '../Components/SearchScreen/SearchHeader'
 import HomeStackNavigation from "./HomeStackNavigation";
+import SeacrhStackNavigation from "./SearchStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +30,7 @@ export default function TabNavigation() {
           backgroundColor: Colors.black,
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
+          height: 60,
         },
         headerStyle: {
           backgroundColor: Colors.black,
@@ -53,7 +55,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={SeacrhStackNavigation}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <SearchActive /> : <SeacrhInactive/>),
           header: ({}) => {
