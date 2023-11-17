@@ -12,9 +12,9 @@ import Star from "../../../assets/star-for-rate.svg";
 import SmallButton from "../SmallButton";
 import { useNavigation } from "@react-navigation/native";
 
-export default function GoodList({goodsList}) {
+export default function GoodList({ goodsList, title }) {
   const navigation = useNavigation();
-  
+
   const addToBasket = () => {
     console.log("add to basket");
   };
@@ -46,6 +46,11 @@ export default function GoodList({goodsList}) {
 
   return (
     <View style={{ alignItems: "center", margin: 10 }}>
+      {title ? (
+        <View style={{width: '95%'}}>
+          <Text style={styles.search_results}>{title}</Text>
+        </View>
+      ) : null}
       <FlatList data={goodsList} renderItem={renderItem} numColumns={2} />
     </View>
   );
@@ -86,5 +91,9 @@ const styles = StyleSheet.create({
   price_text: {
     fontFamily: "appFontBold",
     fontSize: 16,
+  },
+  search_results: {
+    fontFamily: "appFontBold",
+    fontSize: 28,
   },
 });

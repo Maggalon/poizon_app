@@ -10,6 +10,7 @@ export default function Button({ title, handlePresentModal }) {
         <LinearGradient
           style={styles.button_gradient}
           colors={[Colors.gradient_left, Colors.gradient_right]}
+          start={[0, 1]} end={[1, 0]}
         >
           <Text style={styles.button_text}>{title}</Text>
         </LinearGradient>

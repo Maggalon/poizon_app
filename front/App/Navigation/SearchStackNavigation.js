@@ -13,6 +13,7 @@ export default function SeacrhStackNavigation() {
       <Stack.Screen name="SearchScreen" component={Search} />
       <Stack.Screen name="CategoryItems" component={ScreenForGoods} />
       <Stack.Screen name="Good" component={Good} />
+      <Stack.Screen name="ResultsSearchScreen" component={ScreenForGoods} />
     </Stack.Navigator>
   );
 }

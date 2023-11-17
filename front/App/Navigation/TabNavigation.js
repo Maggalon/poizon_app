@@ -24,6 +24,7 @@ export default function TabNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarShowLabel: false,
         title: "Барыги",
         tabBarStyle: {
@@ -36,7 +37,7 @@ export default function TabNavigation() {
           backgroundColor: Colors.black,
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
-          height: 90,
+          height: 100,
         },
         headerTitleStyle:{
           color: Colors.white,

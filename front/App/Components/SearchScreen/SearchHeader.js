@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import Colors from "../../../assets/Shared/Colors";
 import { TextInput } from "react-native";
 import SmallButton from "../SmallButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
+  const navigation = useNavigation();
   const [searchInput, setsearchInput] = useState("");
   const handleSearchInput = () => {
     if (searchInput) {
       console.log("search is: " + searchInput);
       setsearchInput("");
+      navigation.navigate("ResultsSearchScreen", {title: 'Результаты поиска:'})
     }
   };
   return (
@@ -19,7 +22,8 @@ export default function Header() {
           style={styles.text_input}
           placeholder="Поиск..."
           value={searchInput}
-          onChangeText={(text) => setsearchInput(text)}
+          underlineColorAndroid={'transparent'}
+          onChangeText={(text) => {setsearchInput(text)}}
         ></TextInput>
         <SmallButton
           title={"Найти"}
@@ -32,7 +36,6 @@ export default function Header() {
 }
 const styles = StyleSheet.create({
   header_container: {
-    height: 80,
     backgroundColor: Colors.black,
     color: Colors.white,
     justifyContent: "center",

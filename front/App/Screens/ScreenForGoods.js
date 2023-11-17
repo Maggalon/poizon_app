@@ -8,7 +8,7 @@ export default function ScreenForGoods() {
   goods = param?.goods
   return (
     <View>
-      <GoodList goodsList={goods}/>
+      <GoodList goodsList={goods} title={param?.title}/>
     </View>
   )
 }
