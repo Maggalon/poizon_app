@@ -17,6 +17,7 @@ import ProfileInactive from '../../assets/inactive-icons/profile-inactive.svg'
 import SearchHeader from '../Components/SearchScreen/SearchHeader'
 import HomeStackNavigation from "./HomeStackNavigation";
 import SeacrhStackNavigation from "./SearchStackNavigation";
+import BasketStackNavigation from "./BasketStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +67,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Basket"
-        component={Basket}
+        component={BasketStackNavigation}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <BasketActive /> : <BasketInactive/>),
         }}
