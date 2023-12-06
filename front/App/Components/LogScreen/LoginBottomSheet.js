@@ -31,7 +31,7 @@ export default function LoginBottomSheet({
       <View style={styles.bottom_sheet}>
         <Text style={styles.bottom_sheet_title}>Вход</Text>
         <TextInput
-          placeholder="Имя"
+          placeholder="Почта"
           style={styles.text_input}
           value={username}
           onChangeText={(text) => setUsername(text)}
