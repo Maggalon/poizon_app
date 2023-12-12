@@ -1,30 +1,34 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models/models');
+const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const userService = require('../service/user-s')
 
-const generateJwt = (id, email, role) => {
-  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, { expiresIn: '24h' });
+const generateJwt = (id, email) => {
+  return jwt.sign({ id, email }, process.env.JWT_ACCSES_SECRET, { expiresIn: '24h' });
 };
 
 class UserController {
   async registration(req, res) {
-    const { email, password, role } = req.body;
+    const {name,number, email, password, passwordEsheRaz, numberCard  } = req.body;
     if (!email || !password) {
       return res.json({ message: 'пустые email or password' });
     }
-    const candidate = await User.findOne({ where: { email } });
+    const candidate = await User.findOne({email});
     if (candidate) {
       return res.json({ message: 'такое мыло уже есть' });
     }
+    if (password != passwordEsheRaz) {
+      return res.json({message: 'пароли разные'})
+    }
     const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ email, role, password: hashPassword });
-    const token = generateJwt(user.id, user.email, user.role);
+    const user = await User.create({ email: email,password:hashPassword, name: name, number: number, numberCard: numberCard });
+    const token = generateJwt(user.id, user.email, user.password);
     return res.json({ token });
   }
 
   async login(req, res) {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.json({ message: 'такого пользователя нет' });
     }
@@ -32,13 +36,20 @@ class UserController {
     if (!comparePassword) {
       return res.json({ message: 'password некоректный' });
     }
-    const token = generateJwt(user.id, user.email, user.role);
+    const token = generateJwt(user.id, user.email);
     return res.json({ token });
   }
 
-  async check(req, res) {
-    res.json({ message: 'asd' });
-  }
+  async getOne(req, res) {
+    try {
+        const getOne = await userService.getOne(req.params.id)
+        return res.json(getOne)
+    }
+
+    catch (e) {
+        res.json({message: "пропиздон в getOne"})
+    }
+}
 }
 
 module.exports = new UserController();

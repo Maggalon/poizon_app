@@ -1,27 +1,33 @@
-require('dotenv').config()
 const express = require('express')
-const sequelize = require('./bd')
-const models = require('./models/models')
-const PORT = process.env.PORT 
-const cors =require('cors')
+const cors = require('cors')
+const cookieParser = require('cookie-parser') 
+const dotenv = require('dotenv')
+const mongoose = require('mongoose')
+const router = require('./routes/index.js')
+
+
+dotenv.config()
+
+const PORT = 1000
+const DB_USER = process.env.DB_USER
+const DB_PASSWORD = process.env.DB_PASSWORD
+
 const app = express()
-const router = require('./routes/index')
 
-
-app.use(cors())
 app.use(express.json())
-app.use('/api',router)
+app.use(cookieParser())
+app.use(cors())
+app.use('/api', router)
+app.use(express.static('uploads'))
 
-
-const start = async () => {
+const start = async() => {
     try {
-        await sequelize.authenticate()
-        await sequelize.sync()
-        app.listen(PORT, () => console.log(`server started on port ${PORT}`))        
-    }
-    catch (e) {
-        console.log(e)
+        await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ncvqodw.mongodb.net/?retryWrites=true&w=majority`)
+
+          app.listen(PORT, () => console.log(`app up on ${PORT}`))
+    } catch (error) {
+        console.log(error)
     }
 }
-start()
 
+start()
