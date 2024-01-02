@@ -1,7 +1,9 @@
 const {Schema, model, trusted} = require('mongoose')
 const { INET, INTEGER } = require('sequelize')
+const mongoose = require('mongoose');
 
-const UserSchema = new Schema({
+
+const HqdShema = new Schema({
     name:{
         type: String
     },
@@ -12,8 +14,14 @@ const UserSchema = new Schema({
         type: String
     },
     rating: {
-        type: Int32Array
+        type: Number
+    },
+    category: {
+        type: String
+    },
+    gender: {
+        type: String
     }
 })
 
-module.exports = model('User', UserSchema) 
+module.exports = model('Hqd', HqdShema) 

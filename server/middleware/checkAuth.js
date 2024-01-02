@@ -11,6 +11,7 @@ module.exports = function (req, res, next) {
         req.email = decoded.email
         req.password = decoded.password
 
+
         next()
     } catch (e) {
         console.log(e)

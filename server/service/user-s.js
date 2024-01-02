@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken');
 
 class UserService {
     async getOne(id) {
-        const getOne = await User.findOne({ createdBy: id })
+        const getOne = await User.findOne(id)
         return getOne
     }
-
+    
 }
 
 module.exports = new UserService()

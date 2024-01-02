@@ -42,7 +42,7 @@ class UserController {
 
   async getOne(req, res) {
     try {
-        const getOne = await userService.getOne(req.params.id)
+      const getOne = await userService.getOne(req.params.id);
         return res.json(getOne)
     }
 
