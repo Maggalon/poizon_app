@@ -5,12 +5,12 @@ const path = require('path');
 class HqdController {
     async registration(req, res) {
         try {
-            const { name, discription, rating, gender, category } = req.body;
+            const { name, discription, rating, gender, category ,price} = req.body;
 
             const avatarFileName = req.file.originalname;
             const avatarImagePath = path.join('uploads', avatarFileName);
 
-            const hqd = new hqdModel({ name, discription: discription, rating, file: avatarImagePath, gender: gender, category: category });
+            const hqd = new hqdModel({ name, discription: discription, rating, file: avatarImagePath, gender: gender, category: category,price: price });
 
             await hqd.save();
 

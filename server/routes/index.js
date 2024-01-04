@@ -77,5 +77,51 @@ router.get('/products-by-category/:category', async (req, res) => {
     }
 });
 
+// выдача всех товаров
+router.get('/all-products', async (req, res) => {
+    try {
+        const products = await hqdModel.find();
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({ message: 'Товары не найдены' });
+        }
+
+        const productsList = products.map(product => ({
+            id: product._id,
+            name: product.name,
+            file: product.file,
+            description: product.discription,  
+            rating: product.rating,
+            category: product.category,
+            gender: product.gender,
+        }));
+
+        res.json(productsList);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'ошибка во всех товарах' });
+    }
+});
+
+router.get('/all-categories', async (req, res) => {
+    try {
+        const categories = await hqdModel.aggregate([
+            { $group: { _id: "$category", file: { $first: "$file" } } }
+        ]);
+
+        if (!categories || categories.length === 0) {
+            return res.status(404).json({ message: 'Категории не найдены' });
+        }
+
+        res.json(categories.map(category => ({
+            name: category._id,
+            file: category.file
+        })));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'ошибка в all категориях' });
+    }
+});
+
 
 module.exports = router

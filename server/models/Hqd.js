@@ -21,6 +21,9 @@ const HqdShema = new Schema({
     },
     gender: {
         type: String
+    },
+    price: {
+        type: Number
     }
 })
 

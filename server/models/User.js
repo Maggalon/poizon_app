@@ -24,6 +24,9 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    god: {
+        type: Number
     }
 })
 
