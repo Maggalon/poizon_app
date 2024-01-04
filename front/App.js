@@ -6,6 +6,7 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import Login from "./App/Screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
@@ -23,8 +24,14 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
+  if (AsyncStorage.getItem("LOGIN_TOKEN") === null) {
+    return (
+      <Login/>
+    );
+  }
   return (
-    // <Login/>
+    //<Login/>
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <TabNavigation />

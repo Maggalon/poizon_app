@@ -5,7 +5,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    number: {
+    phone: {
         type: String,
         required: true,
         unique: true
@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         required: true
     },
    
-    numberCard: {
+    cardNumber: {
         type: String,
         required: true,
         unique: true

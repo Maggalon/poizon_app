@@ -4,6 +4,8 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SmallButton from "../SmallButton";
 import Colors from "../../../assets/Shared/Colors";
 
+import axios from "axios";
+
 export default function SignUpBottomSheet({
   bottomSheetSignUp,
   index,
@@ -17,7 +19,7 @@ export default function SignUpBottomSheet({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (
       name &&
       phone &&
@@ -32,22 +34,36 @@ export default function SignUpBottomSheet({
         name,
         phone,
         email,
-        dob,
-        cardNumber,
         password,
+        confirmPassword,
+        cardNumber,
       };
 
       // Do something with the data, e.g., make a POST request
       console.log("User Data:", userData);
-
-      // Clear the input fields after printing to the console
-      setName("");
-      setPhone("");
-      setEmail("");
-      setDob("");
-      setCardNumber("");
-      setPassword("");
-      setConfirmPassword("");
+      
+      try {
+        await axios.post("http://192.168.1.45:1000/api/user/registration", userData).then(res => {
+          console.log(res.data.message)
+          if (res.data.message == "такое мыло уже есть") {
+            console.warn("Аккаунт с такой почтой уже зарегистрирован");
+          }
+          else {
+            // Clear the input fields after printing to the console
+            setName("");
+            setPhone("");
+            setEmail("");
+            setDob("");
+            setCardNumber("");
+            setPassword("");
+            setConfirmPassword("");
+          }
+        }).catch((e) => console.log(e.message))
+      }
+      catch (e) {
+        console.log(e.response.data);
+      }
+      
     } else {
       console.warn("Please fill in all fields");
     }

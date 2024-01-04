@@ -1,8 +1,11 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SmallButton from "../SmallButton";
 import Colors from "../../../assets/Shared/Colors";
+
+import axios from "axios";
 
 export default function LoginBottomSheet({
   bottomSheetLogin,
@@ -12,13 +15,24 @@ export default function LoginBottomSheet({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (username && password) {
       // Do something with the data, e.g., make a POST request
       console.log("Username:" + username + "\nPassword:" + password);
-      // Clear the input fields after logging
-      setUsername("");
-      setPassword("");
+
+      try {
+        await axios.post("http://192.168.1.45:1000/api/user/login", {email: username, password: password}).then(res => {
+          console.log(res.data)
+          AsyncStorage.setItem('LOGIN_TOKEN', res.data.token)
+          // Clear the input fields after logging
+          setUsername("");
+          setPassword("");
+        }).catch((e) => console.log(e.message))
+      }
+      catch (e) {
+        console.log(e);
+      }
+      
     }
   };
   return (

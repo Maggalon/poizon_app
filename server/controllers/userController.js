@@ -9,7 +9,7 @@ const generateJwt = (id, email) => {
 
 class UserController {
   async registration(req, res) {
-    const {name,number, email, password, passwordEsheRaz, numberCard  } = req.body;
+    const {name, phone, email, password, confirmPassword, cardNumber  } = req.body;
     if (!email || !password) {
       return res.json({ message: 'пустые email or password' });
     }
@@ -17,11 +17,15 @@ class UserController {
     if (candidate) {
       return res.json({ message: 'такое мыло уже есть' });
     }
-    if (password != passwordEsheRaz) {
+    if (password != confirmPassword) {
       return res.json({message: 'пароли разные'})
     }
     const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ email: email,password:hashPassword, name: name, number: number, numberCard: numberCard });
+    const user = await User.create({ email: email, 
+                                     password: hashPassword, 
+                                     name: name, 
+                                     phone: phone, 
+                                     cardNumber: cardNumber });
     const token = generateJwt(user.id, user.email, user.password);
     return res.json({ token });
   }
