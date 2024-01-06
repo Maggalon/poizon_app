@@ -26,7 +26,7 @@ const UserSchema = new Schema({
         unique: true
     },
     god: {
-        type: Number
+        type: String
     }
 })
 

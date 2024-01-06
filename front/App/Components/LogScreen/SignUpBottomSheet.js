@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SmallButton from "../SmallButton";
 import Colors from "../../../assets/Shared/Colors";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export default function SignUpBottomSheet({
@@ -14,17 +14,27 @@ export default function SignUpBottomSheet({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
+  const [god, setGod] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('user_data', jsonValue);
+    } catch (e) {
+      // saving error
+      console.log(e)
+    }
+  };
 
   const handleSignUp = async () => {
     if (
       name &&
       phone &&
       email &&
-      dob &&
+      god &&
       cardNumber &&
       password &&
       confirmPassword
@@ -37,6 +47,7 @@ export default function SignUpBottomSheet({
         password,
         confirmPassword,
         cardNumber,
+        god,
       };
 
       // Do something with the data, e.g., make a POST request
@@ -50,10 +61,11 @@ export default function SignUpBottomSheet({
           }
           else {
             // Clear the input fields after printing to the console
+            storeData(userData)
             setName("");
             setPhone("");
             setEmail("");
-            setDob("");
+            setGod("");
             setCardNumber("");
             setPassword("");
             setConfirmPassword("");
@@ -98,8 +110,8 @@ export default function SignUpBottomSheet({
         <TextInput
           placeholder="Дата рождения ДД.ММ.ГГГГ"
           style={styles.text_input}
-          value={dob}
-          onChangeText={(text) => setDob(text)}
+          value={god}
+          onChangeText={(text) => setGod(text)}
         ></TextInput>
         <TextInput
           placeholder="Номер карты"

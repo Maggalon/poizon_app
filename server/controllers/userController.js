@@ -9,7 +9,7 @@ const generateJwt = (id, email) => {
 
 class UserController {
   async registration(req, res) {
-    const {name, phone, email, password, confirmPassword, cardNumber,god  } = req.body;
+    const {name, phone, email, password, confirmPassword, cardNumber, god  } = req.body;
     if (!email || !password) {
       return res.json({ message: 'пустые email or password' });
     }
@@ -26,7 +26,7 @@ class UserController {
                                      name: name, 
                                      phone: phone, 
                                      cardNumber: cardNumber,
-                                    god: god });
+                                     god: god });
     const token = generateJwt(user.id, user.email, user.password);
     return res.json({ token });
   }

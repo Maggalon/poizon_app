@@ -15,6 +15,16 @@ export default function LoginBottomSheet({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('user_data', jsonValue);
+    } catch (e) {
+      // saving error
+      console.log(e)
+    }
+  };
+
   const handleLogin = async () => {
     if (username && password) {
       // Do something with the data, e.g., make a POST request
@@ -23,7 +33,7 @@ export default function LoginBottomSheet({
       try {
         await axios.post("http://192.168.1.45:1000/api/user/login", {email: username, password: password}).then(res => {
           console.log(res.data)
-          AsyncStorage.setItem('LOGIN_TOKEN', res.data.token)
+          storeData(res.data)
           // Clear the input fields after logging
           setUsername("");
           setPassword("");

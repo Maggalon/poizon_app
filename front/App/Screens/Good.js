@@ -17,7 +17,7 @@ export default function Good() {
         contentContainerStyle={styles.good_container}
         showsVerticalScrollIndicator={false}
       >
-        <Image sourse={item.image} style={styles.image_for_good} />
+        <Image sourse={{ uri: item.image }} style={styles.image_for_good} />
         <View style={styles.good_info}>
           <Text style={styles.label_text}>{item.label}</Text>
           <View style={styles.rate_view}>
@@ -29,15 +29,7 @@ export default function Good() {
         <View style={{ width: "87%", gap: 5 }}>
           <Text style={styles.description_title}>Описание</Text>
           <Text style={styles.description}>
-            Душа моя озарена неземной радостью, как эти чудесные весенние утра,
-            которыми я наслаждаюсь от всего сердца. Я совсем один и блаженствую
-            в здешнем краю, словно созданном для таких, как я. Я так счастлив,
-            мой друг, так упоен ощущением покоя, что искусство мое страдает от
-            этого. Ни одного штриха не мог бы я сделать, а никогда не был таким
-            большим художником, как в эти минуты. Когда от милой моей долины
-            поднимается пар и полдневное солнце стоит над непроницаемой чащей
-            темного леса и шел, шел, очень долго шел, чтобы за дальними далями,
-            высокими горами найти то, не знаю что и отнетси тому, не знаю кому.
+            {item.description}
           </Text>
         </View>
       </ScrollView>

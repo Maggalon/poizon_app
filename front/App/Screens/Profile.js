@@ -12,13 +12,14 @@ import Colors from "../../assets/Shared/Colors";
 import SmallButton from "../Components/SmallButton";
 import * as ImagePicker from "expo-image-picker";
 
-export default function Profile() {
+export default function Profile({userData}) {
+  //console.log("from profile", userData["name"])
   const profile_info = {
-    name: "Кирилл Чупиков",
-    burth_date: "20.04.1888",
-    tel_number: "8 800 555 35 35",
-    email: "suka@gmail.com",
-    card_number: "5689 4826 6486 2350",
+    name: userData.name,
+    burth_date: userData.god,
+    tel_number: userData.phone,
+    email: userData.email,
+    card_number: userData.cardNumber,
     //photo: "../../assets/for-goods/image1.jpg",
   };
 
@@ -41,11 +42,11 @@ export default function Profile() {
     }
   };
   const [editable, setEditable] = useState(false);
-  const [name, setName] = useState(profile_info.name);
-  const [burthDate, setburthDate] = useState(profile_info.burth_date);
-  const [telNumber, settelNumber] = useState(profile_info.tel_number);
-  const [email, setEmail] = useState(profile_info.email);
-  const [cardNumber, setCardNumber] = useState(profile_info.card_number);
+  const [name, setName] = useState(userData.name);
+  const [burthDate, setburthDate] = useState(userData.god);
+  const [telNumber, settelNumber] = useState(userData.phone);
+  const [email, setEmail] = useState(userData.email);
+  const [cardNumber, setCardNumber] = useState(userData.cardNumber);
 
   const changeProfile = () => {
     const userData = {

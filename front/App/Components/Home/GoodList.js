@@ -24,7 +24,7 @@ export default function GoodList({ goodsList, title }) {
         style={styles.good_item}
         onPress={() => navigation.navigate("Good", { item: item })}
       >
-        <Image source={item.image} style={styles.image_for_good} />
+        <Image source={{ uri: item.image }} style={styles.image_for_good} />
         <View style={{ width: "90%", display: "flex", gap: 2 }}>
           <Text style={styles.label_text}>{item.label}</Text>
           <View style={styles.rate_view}>

@@ -21,7 +21,7 @@ import BasketStackNavigation from "./BasketStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation() {
+export default function TabNavigation({userData}) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -74,7 +74,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        children={() => <Profile userData={userData} />}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <ProfileActive /> : <ProfileInactive/>),
         }}
