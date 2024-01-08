@@ -26,7 +26,7 @@ export default function GoodList({ goodsList, title }) {
       >
         <Image source={{ uri: item.image }} style={styles.image_for_good} />
         <View style={{ width: "90%", display: "flex", gap: 2 }}>
-          <Text style={styles.label_text}>{item.label}</Text>
+          <Text style={styles.label_text}>{item.label.slice(0, 35) + "..."}</Text>
           <View style={styles.rate_view}>
             <Star />
             <Text style={styles.rate_text}>{item.rate}</Text>
@@ -34,12 +34,12 @@ export default function GoodList({ goodsList, title }) {
           <Text style={styles.price_text}>{item.price}</Text>
         </View>
 
-        <SmallButton
+        {/* <SmallButton
           title={"В корзину"}
           width={"100%"}
           height={30}
           onPress={addToBasket}
-        />
+        /> */}
       </TouchableOpacity>
     );
   };

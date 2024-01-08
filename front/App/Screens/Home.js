@@ -12,16 +12,16 @@ export default function Home() {
     const getGoods = async () => {
       try {
         await axios.get("http://192.168.1.45:1000/api/all-products").then(res => {
-          //console.log(res.data[0]);
+          
           
           setAllGoods(res.data.map(item => {
-            //console.log(item.description);
+            console.log(`http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`);
             return {
               id: item.id,
               image: `http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
               label: item.name,
               rate: item.rating,
-              price: "1306₽",
+              price: `${item.price}₽`,
               description: item.description
             }
           }))

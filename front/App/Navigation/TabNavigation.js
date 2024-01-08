@@ -21,7 +21,7 @@ import BasketStackNavigation from "./BasketStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation({userData}) {
+export default function TabNavigation({userData, basket, setBasket, categories}) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -50,14 +50,14 @@ export default function TabNavigation({userData}) {
     >
       <Tab.Screen
         name="Home"
-        component={HomeStackNavigation}
+        children={() => <HomeStackNavigation basket={basket} setBasket={setBasket} />}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <HomeActive /> : <HomeInactive/>),
         }}
       />
       <Tab.Screen
         name="Search"
-        component={SeacrhStackNavigation}
+        children={() => <SeacrhStackNavigation categories={categories} />}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <SearchActive /> : <SeacrhInactive/>),
           header: ({}) => {
@@ -67,7 +67,7 @@ export default function TabNavigation({userData}) {
       />
       <Tab.Screen
         name="Basket"
-        component={BasketStackNavigation}
+        children={() => <BasketStackNavigation basket={basket} setBasket={setBasket} />}
         options={{
           tabBarIcon: (tabInfo) => (tabInfo.focused ? <BasketActive /> : <BasketInactive/>),
         }}

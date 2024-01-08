@@ -11,7 +11,9 @@ export default function Buy() {
   const getAllPrice = (itemList) => {
     sum = 0;
     for (let i = 0; i < itemList.length; i++) {
-      sum += Number(itemList[i].price.substr(0, itemList[i].price.length - 1));
+      var price = Number(itemList[i].price.split("₽")[0])
+      var n = Number(itemList[i].price.split('x ')[1])
+      sum += price * n;
     }
     return sum;
   };

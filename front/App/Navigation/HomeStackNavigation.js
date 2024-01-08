@@ -5,11 +5,11 @@ import Good from "../Screens/Good";
 import Home from "../Screens/Home";
 
 const Stack = createStackNavigator();
-export default function HomeStackNavigation() {
+export default function HomeStackNavigation({basket, setBasket}) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={Home} />
-      <Stack.Screen name="Good" component={Good} />
+      <Stack.Screen name="Good">{() => <Good basket={basket} setBasket={setBasket} />}</Stack.Screen>
     </Stack.Navigator>
   );
 }

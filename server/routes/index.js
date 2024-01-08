@@ -7,6 +7,7 @@ const checkAuth = require('../middleware/checkAuth')
 const gender = require('../controllers/gender')
 const category = require('../controllers/category')
 const hqdModel = require('../models/Hqd')
+const categoryModel = require('../models/Category')
 
 const router = new Router()
 
@@ -81,7 +82,7 @@ router.get('/products-by-category/:category', async (req, res) => {
 router.get('/all-products', async (req, res) => {
     try {
         const products = await hqdModel.find();
-
+        
         if (!products || products.length === 0) {
             return res.status(404).json({ message: 'Товары не найдены' });
         }
@@ -94,6 +95,7 @@ router.get('/all-products', async (req, res) => {
             rating: product.rating,
             category: product.category,
             gender: product.gender,
+            price: product.price
         }));
 
         res.json(productsList);
@@ -105,16 +107,17 @@ router.get('/all-products', async (req, res) => {
 
 router.get('/all-categories', async (req, res) => {
     try {
-        const categories = await hqdModel.aggregate([
-            { $group: { _id: "$category", file: { $first: "$file" } } }
-        ]);
+        const categories = await categoryModel.find();
+        // const categories = await hqdModel.aggregate([
+        //     { $group: { _id: "$category", file: { $first: "$file" } } }
+        // ]);
 
-        if (!categories || categories.length === 0) {
-            return res.status(404).json({ message: 'Категории не найдены' });
-        }
-
+        // if (!categories || categories.length === 0) {
+        //     return res.status(404).json({ message: 'Категории не найдены' });
+        // }
+        console.log(categories);
         res.json(categories.map(category => ({
-            name: category._id,
+            name: category.name,
             file: category.file
         })));
     } catch (error) {

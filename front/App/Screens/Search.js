@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import Grid from "@react-css/grid";
 import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Colors from "../../assets/Shared/Colors";
 import axios from "axios";
 import { withRepeat } from "react-native-reanimated";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const { width } = Dimensions.get('window');
 const windowWidth = width;
@@ -47,8 +48,8 @@ const Category = ({item}) => {
   return <TouchableOpacity
             onPress={() => {
               //getGoods();
-              item.navigation.navigate("CategoryItems", { goods: item.goodsToDisplay })
-              console.log(item.goodsToDisplay);
+              // item.navigation.navigate("CategoryItems", { goods: item.goodsToDisplay })
+              // console.log(item.goodsToDisplay);
             }
             }
             style={styles.category_style}
@@ -57,17 +58,26 @@ const Category = ({item}) => {
               source={require("../../assets/category-back.png")}
               style={styles.background_image}
             />
-            <View style={{ position: "absolute", top: 14, left: 14 }}>
+            <View style={{ position: "absolute", top: 14, left: 25 }}>
               <Text style={styles.category_name}>{item.name}</Text>
             </View>
           </TouchableOpacity>
 }
 
-export default function Search() {
+export default function Search({categories}) {
 
   const navigation = useNavigation();
-  const [categories, setCategories] = useState([]);
+  //const [categories, setCategories] = useState([]);
   const [allGoods, setAllGoods] = useState([]);
+
+  const sex = [
+    {
+      name: "Мужское"
+    },
+    {
+      name: "Женское"
+    }
+  ]
 
   const getGoods = async () => {
     try {
@@ -93,89 +103,43 @@ export default function Search() {
     }
   }
 
-  useEffect(() => {
-    getGoods();
-    let allCategories = []
-    const getCategories = async () => {
-      try {
-        await axios.get("http://192.168.1.45:1000/api/all-categories").then(res => {
-          //console.log(res.data);
-          allCategories = res.data;
-        }).catch((e) => console.log(e.message))
-      }
-      catch (e) {
-        console.log(e);
-      }
-      //console.log(allCategories);
-      setCategories(allCategories.map(category => {
-        return {
-          name: category.name,
-          goodsToDisplay: allGoods.filter(item => item.category === category.name),
-          navigation: navigation
-        }
+  // useFocusEffect(() => {
+  //   getGoods();
+  //   console.log(allGoods);
+  //   // let allCategories = []
+  //   // const getCategories = async () => {
+  //   //   try {
+  //   //     await axios.get("http://192.168.1.45:1000/api/all-categories").then(res => {
+  //   //       //console.log(res.data);
+  //   //       allCategories = res.data;
+          
+  //   //     }).catch((e) => console.log(e.message))
+  //   //   }
+  //   //   catch (e) {
+  //   //     console.log(e);
+  //   //   }
+  //   //   //console.log(allCategories);
+  //   //   setCategories(allCategories.map(category => {
+  //   //     return {
+  //   //       name: category.name,
+  //   //       navigation: navigation,
+  //   //       goodsToDisplay: allGoods.filter(item => item.category === category.name),
+  //   //     }
         
-      }))
-    }
-    getCategories()
+  //   //   }))
+  //   // }
+  //   // getCategories()
+  //   //console.log(categories);
+  // })
 
-  }, [])
-
-  const goods_for_men = [
-    {
-      id: "01",
-      image: require("../../assets/for-goods/image1.jpg"),
-      label: "Кофта сиреневая",
-      rate: "4.9",
-      price: "1306₽",
-    },
-    {
-      id: "02",
-      image: require("../../assets/for-goods/image2.jpg"),
-      label: "Белое пальто",
-      rate: "4.59",
-      price: "1468₽",
-    },
-    {
-      id: "03",
-      image: require("../../assets/for-goods/image3.jpg"),
-      label: "Желтая куртка",
-      rate: "4.47",
-      price: "56827₽",
-    },
-  ];
-  const goods_for_women = [
-    {
-      id: "04",
-      image: require("../../assets/for-goods/image4.jpeg"),
-      label: "Бежевое пальто",
-      rate: "3.02",
-      price: "4893₽",
-    },
-    {
-      id: "05",
-      image: require("../../assets/for-goods/image5.jpeg"),
-      label: "Брючный костюм",
-      rate: "4.20",
-      price: "86549₽",
-    },
-    {
-      id: "06",
-      image: require("../../assets/for-goods/image6.jpeg"),
-      label: "Голубая кофта",
-      rate: "4.19",
-      price: "15₽",
-    },
-  ];
-
-  const categoryNames = ["Мужское", "Женское"];
   
   return (
     <View style={styles.container}>
       <FlatList 
-        data={categories}
+        data={sex}
         numColumns={2}
         renderItem={Category}
-        keyExtractor={item => item.file}
+        keyExtractor={item => item.name}
       />
     </View>
   );

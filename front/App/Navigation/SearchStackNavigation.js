@@ -7,10 +7,10 @@ import ScreenForGoods from "../Screens/ScreenForGoods";
 import Good from "../Screens/Good";
 
 const Stack = createStackNavigator();
-export default function SeacrhStackNavigation() {
+export default function SeacrhStackNavigation({categories}) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="SearchScreen" component={Search} />
+      <Stack.Screen name="SearchScreen">{() => <Search categories={categories} />}</Stack.Screen>
       <Stack.Screen name="CategoryItems" component={ScreenForGoods} />
       <Stack.Screen name="Good" component={Good} />
       <Stack.Screen name="ResultsSearchScreen" component={ScreenForGoods} />
