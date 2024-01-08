@@ -27,6 +27,9 @@ const UserSchema = new Schema({
     },
     god: {
         type: String
+    },
+    avatar: {
+        type: String
     }
 })
 
