@@ -6,15 +6,15 @@ import SmallButton from "../SmallButton";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Header() {
+export default function Header({goods}) {
   const navigation = useNavigation();
   const [searchInput, setsearchInput] = useState("");
   const handleSearchInput = () => {
     
     if (searchInput) {
-      console.log("search is: " + searchInput);
+      console.log(goods);
+      navigation.navigate("ResultsSearchScreen", { goods: goods.filter(good => good.label.toLowerCase().includes(searchInput.toLocaleLowerCase())), title: 'Результаты поиска:'})
       setsearchInput("");
-      navigation.navigate("ResultsSearchScreen", {title: 'Результаты поиска:'})
     }
   };
   return (

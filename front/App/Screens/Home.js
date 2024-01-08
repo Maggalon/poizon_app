@@ -4,35 +4,35 @@ import Carousel from '../Components/Home/Carousel'
 import GoodList from '../Components/Home/GoodList'
 import axios from 'axios'
 
-export default function Home() {
+export default function Home({allGoods}) {
 
-  const [allGoods, setAllGoods] = useState([])
+  // const [allGoods, setAllGoods] = useState([])
 
-  useEffect(() => {
-    const getGoods = async () => {
-      try {
-        await axios.get("http://192.168.1.45:1000/api/all-products").then(res => {
+  // useEffect(() => {
+  //   const getGoods = async () => {
+  //     try {
+  //       await axios.get("http://192.168.1.45:1000/api/all-products").then(res => {
           
           
-          setAllGoods(res.data.map(item => {
-            console.log(`http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`);
-            return {
-              id: item.id,
-              image: `http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
-              label: item.name,
-              rate: item.rating,
-              price: `${item.price}₽`,
-              description: item.description
-            }
-          }))
-        }).catch((e) => console.log(e.message))
-      }
-      catch (e) {
-        console.log(e);
-      }
-    }
-    getGoods()
-  }, [])
+  //         setAllGoods(res.data.map(item => {
+  //           console.log(`http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`);
+  //           return {
+  //             id: item.id,
+  //             image: `http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
+  //             label: item.name,
+  //             rate: item.rating,
+  //             price: `${item.price}₽`,
+  //             description: item.description
+  //           }
+  //         }))
+  //       }).catch((e) => console.log(e.message))
+  //     }
+  //     catch (e) {
+  //       console.log(e);
+  //     }
+  //   }
+  //   getGoods()
+  // }, [])
 
   // const allGoods = [
   //   {

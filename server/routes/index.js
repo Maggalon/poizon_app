@@ -118,6 +118,7 @@ router.get('/all-categories', async (req, res) => {
         console.log(categories);
         res.json(categories.map(category => ({
             name: category.name,
+            gender: category.genderCategory,
             file: category.file
         })));
     } catch (error) {

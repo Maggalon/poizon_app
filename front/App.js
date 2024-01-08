@@ -26,6 +26,7 @@ export default function App() {
   const [userData, setUserData] = useState(null)
   const [basket, setBasketItems] = useState(null)
   const [categories, setCategories] = useState(null)
+  const [goods, setGoods] = useState(null)
   
   const removeValue = async () => {
     try {
@@ -76,12 +77,38 @@ export default function App() {
       
     // }))
   }
+
+  const getGoods = async () => {
+    try {
+      await axios.get("http://192.168.1.45:1000/api/all-products").then(res => {
+        //console.log(res.data[0]);
+        
+        setGoods(res.data.map(item => {
+          //console.log(item.description);
+          return {
+            id: item.id,
+            image: `http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
+            label: item.name,
+            rate: item.rating,
+            price: "1306₽",
+            description: item.description,
+            category: item.category,
+            gender: item.gender
+          }
+        }))
+      }).catch((e) => console.log(e.message))
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
   //
   useEffect(() => {
     //removeValue()
     getData('user_data', setUserData)
     getData('basket', setBasketItems)
     getCategories()
+    getGoods()
   }, [])
   
   if (!fontsLoaded) {
@@ -101,6 +128,7 @@ export default function App() {
                          basket={basket}
                          setBasket={setBasket}
                          categories={categories}
+                         goods={goods}
           />
         </NavigationContainer>
       </SafeAreaView>

@@ -14,11 +14,13 @@ import Colors from "../../assets/Shared/Colors";
 import axios from "axios";
 import { withRepeat } from "react-native-reanimated";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useRoute } from "@react-navigation/native";
+
 
 const { width } = Dimensions.get('window');
 const windowWidth = width;
 
-const Category = ({item}) => {
+const Category = ({item, navigation, op, handlerFunction, goods, sexName}) => {
   //const navigation = useNavigation();
   // const [goodsToDisplay, setGoodsToDisplay] = useState([]);
 
@@ -48,7 +50,14 @@ const Category = ({item}) => {
   return <TouchableOpacity
             onPress={() => {
               //getGoods();
-              // item.navigation.navigate("CategoryItems", { goods: item.goodsToDisplay })
+              if (op == 'sex') {
+                handlerFunction(item.name)
+                navigation.navigate("SexCategoriesScreen", { sexName: item.name })
+              } else {
+                console.log(goods);
+                navigation.navigate("CategoryItems", { goods: goods.filter(good => good.category == item.name && good.gender == sexName) })
+              }
+              
               // console.log(item.goodsToDisplay);
             }
             }
@@ -64,20 +73,16 @@ const Category = ({item}) => {
           </TouchableOpacity>
 }
 
-export default function Search({categories}) {
+export default function Search({categories, op, handlerFunction, goods}) {
+  const param = useRoute().params;
+  sexName = param?.sexName
+  if (sexName) {
+    categories = categories.filter(category => category.gender == sexName)
+  }
 
   const navigation = useNavigation();
   //const [categories, setCategories] = useState([]);
   const [allGoods, setAllGoods] = useState([]);
-
-  const sex = [
-    {
-      name: "Мужское"
-    },
-    {
-      name: "Женское"
-    }
-  ]
 
   const getGoods = async () => {
     try {
@@ -136,9 +141,14 @@ export default function Search({categories}) {
   return (
     <View style={styles.container}>
       <FlatList 
-        data={sex}
+        data={categories}
         numColumns={2}
-        renderItem={Category}
+        renderItem={({item}) => <Category item={item} 
+                                          navigation={navigation} 
+                                          op={op} 
+                                          handlerFunction={handlerFunction} 
+                                          goods={goods}
+                                          sexName={sexName} />}
         keyExtractor={item => item.name}
       />
     </View>
