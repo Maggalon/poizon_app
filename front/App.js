@@ -58,7 +58,7 @@ export default function App() {
 
   const getCategories = async () => {
     try {
-      await axios.get("http://192.168.1.45:1000/api/all-categories").then(res => {
+      await axios.get("http://192.168.0.105:1000/api/all-categories").then(res => {
         console.log(res.data);
         setCategories(res.data)
         
@@ -80,17 +80,17 @@ export default function App() {
 
   const getGoods = async () => {
     try {
-      await axios.get("http://192.168.1.45:1000/api/all-products").then(res => {
-        //console.log(res.data[0]);
+      await axios.get("http://192.168.0.105:1000/api/all-products").then(res => {
+        //console.log(res);
         
         setGoods(res.data.map(item => {
           //console.log(item.description);
           return {
             id: item.id,
-            image: `http://192.168.1.45:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
+            image: `http://192.168.0.105:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
             label: item.name,
             rate: item.rating,
-            price: "1306₽",
+            price: item.price + "₽",
             description: item.description,
             category: item.category,
             gender: item.gender
