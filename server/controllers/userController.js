@@ -69,6 +69,32 @@ class UserController {
         res.json({message: "пропиздон в getOne"})
     }
 }
+
+ async updateUser (req, res)  {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Юзер не залогинен' });
+    }
+
+    user.name = req.body.name || user.name;
+    user.phone = req.body.phone || user.phone;
+    user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
+    user.cardNumber = req.body.cardNumber || user.cardNumber;
+    user.god = req.body.god || user.god;
+    user.avatar = req.body.avatar || user.avatar;
+
+    await user.save();
+
+    res.json({ message: 'все, поменял, красава', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'пизда в пути' });
+  }
+};
+
 }
 
 module.exports = new UserController();
