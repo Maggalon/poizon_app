@@ -11,6 +11,7 @@ export default function LoginBottomSheet({
   bottomSheetLogin,
   index,
   snapPoints,
+  setUserData
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,9 +32,10 @@ export default function LoginBottomSheet({
       console.log("Username:" + username + "\nPassword:" + password);
 
       try {
-        await axios.post("http://192.168.1.45:1000/api/user/login", {email: username, password: password}).then(res => {
+        await axios.post("http://192.168.0.106:1000/api/user/login", {email: username, password: password}).then(res => {
           console.log(res.data)
           storeData(res.data)
+          setUserData(res.data)
           // Clear the input fields after logging
           setUsername("");
           setPassword("");

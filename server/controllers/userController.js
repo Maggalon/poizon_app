@@ -10,8 +10,8 @@ const generateJwt = (id, email) => {
 class UserController {
   async registration(req, res) {
     const {name, phone, email, password, confirmPassword, cardNumber, god  } = req.body;
-    const avatarFileName = req.file.originalname;
-    const avatarImagePath = path.join('uploads', avatarFileName);
+    // const avatarFileName = req.file.originalname;
+    // const avatarImagePath = path.join('uploads', avatarFileName);
     if (!email || !password) {
       return res.json({ message: 'пустые email or password' });
     }
@@ -30,7 +30,7 @@ class UserController {
                                      phone: phone, 
                                      cardNumber: cardNumber,
                                      god: god,
-                                     avatar: avatarImagePath });
+                                     avatar: "" });
     const token = generateJwt(user.id, user.email, user.password);
     return res.json({ token });
   }
@@ -73,7 +73,8 @@ class UserController {
  async updateUser (req, res)  {
   try {
     const user = await User.findById(req.params.userId);
-
+    //console.log(user);
+    console.log(req.file);
     if (!user) {
       return res.status(404).json({ message: 'Юзер не залогинен' });
     }
@@ -84,7 +85,7 @@ class UserController {
     user.password = req.body.password || user.password;
     user.cardNumber = req.body.cardNumber || user.cardNumber;
     user.god = req.body.god || user.god;
-    user.avatar = req.body.avatar || user.avatar;
+    user.avatar = `http://192.168.0.106:1000/${req.file.filename}` || user.avatar;
 
     await user.save();
 

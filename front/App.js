@@ -27,10 +27,11 @@ export default function App() {
   const [basket, setBasketItems] = useState(null)
   const [categories, setCategories] = useState(null)
   const [goods, setGoods] = useState(null)
+  //const [isLoggedIn, setIsLoggedIn] = useState(false)
   
   const removeValue = async () => {
     try {
-      await AsyncStorage.removeItem('basket')
+      await AsyncStorage.removeItem('user_data')
     } catch(e) {
       // remove error
       console.log(e)
@@ -42,8 +43,8 @@ export default function App() {
     //console.log('getting user info');
     try {
       const value = await AsyncStorage.getItem(name);
-      handlerFunction(value != null ? JSON.parse(value) : [])
-      console.log(value)
+      handlerFunction(value != null ? JSON.parse(value) : null)
+      console.log(`${name}: ${value}`)
     } catch (e) {
       // error reading value
     }
@@ -58,7 +59,7 @@ export default function App() {
 
   const getCategories = async () => {
     try {
-      await axios.get("http://192.168.0.105:1000/api/all-categories").then(res => {
+      await axios.get("http://192.168.0.106:1000/api/all-categories").then(res => {
         console.log(res.data);
         setCategories(res.data)
         
@@ -80,14 +81,16 @@ export default function App() {
 
   const getGoods = async () => {
     try {
-      await axios.get("http://192.168.0.105:1000/api/all-products").then(res => {
+      await axios.get("http://192.168.0.106:1000/api/all-products").then(res => {
         //console.log(res);
         
         setGoods(res.data.map(item => {
           //console.log(item.description);
+          item.file = item.file.replace("uploads\\", "")
+          item.file = item.file.replace("\\", "/")
           return {
             id: item.id,
-            image: `http://192.168.0.105:1000/${item.file.replace("uploads\\", "")}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
+            image: `http://192.168.0.106:1000/${item.file}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
             label: item.name,
             rate: item.rating,
             price: item.price + "₽",
@@ -114,10 +117,10 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  //console.log(isLoggedIn)
-  if (userData === null) {
+  //console.log(userData)
+  if (userData == null) {
     return (
-      <Login/>
+      <Login setUserData={setUserData} />
     );
   } else {
     return (

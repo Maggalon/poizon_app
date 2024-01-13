@@ -10,6 +10,7 @@ export default function SignUpBottomSheet({
   bottomSheetSignUp,
   index,
   snapPoints,
+  setUserData
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -54,7 +55,7 @@ export default function SignUpBottomSheet({
       console.log("User Data:", userData);
       
       try {
-        await axios.post("http://192.168.1.45:1000/api/user/registration", userData).then(res => {
+        await axios.post("http://192.168.0.106:1000/api/user/registration", userData).then(res => {
           console.log(res.data.message)
           if (res.data.message == "такое мыло уже есть") {
             console.warn("Аккаунт с такой почтой уже зарегистрирован");
@@ -62,6 +63,8 @@ export default function SignUpBottomSheet({
           else {
             // Clear the input fields after printing to the console
             storeData(userData)
+            setUserData(userData)
+  
             setName("");
             setPhone("");
             setEmail("");

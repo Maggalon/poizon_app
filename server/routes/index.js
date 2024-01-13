@@ -115,7 +115,7 @@ router.get('/all-categories', async (req, res) => {
         // if (!categories || categories.length === 0) {
         //     return res.status(404).json({ message: 'Категории не найдены' });
         // }
-        console.log(categories);
+        //console.log(categories);
         res.json(categories.map(category => ({
             name: category.name,
             gender: category.genderCategory,

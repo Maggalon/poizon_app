@@ -54,7 +54,7 @@ const Category = ({item, navigation, op, handlerFunction, goods, sexName}) => {
                 handlerFunction(item.name)
                 navigation.navigate("SexCategoriesScreen", { sexName: item.name })
               } else {
-                console.log(goods);
+                //console.log(goods);
                 navigation.navigate("CategoryItems", { goods: goods.filter(good => good.category == item.name && good.gender == sexName) })
               }
               

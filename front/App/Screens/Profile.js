@@ -11,9 +11,10 @@ import React, { useState } from "react";
 import Colors from "../../assets/Shared/Colors";
 import SmallButton from "../Components/SmallButton";
 import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
 
 export default function Profile({userData}) {
-  //console.log("from profile", userData["name"])
+  //console.log("from profile", userData._id)
   const profile_info = {
     name: userData.name,
     burth_date: userData.god,
@@ -23,22 +24,25 @@ export default function Profile({userData}) {
     //photo: "../../assets/for-goods/image1.jpg",
   };
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(userData.avatar);
 
   const uploadImage = async () => {
-    try {
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        profile_info.photo = result.assets[0].uri;
+    if (editable) {
+      try {
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+        if (!result.canceled) {
+          let localUri = result.assets[0].uri;
+          setImage(localUri)
+        }
+      } catch (error) {
+        alert("Ошибка при загрузке картинки: " + error.message);
       }
-    } catch (error) {
-      alert("Ошибка при загрузке картинки: " + error.message);
     }
   };
   const [editable, setEditable] = useState(false);
@@ -48,15 +52,73 @@ export default function Profile({userData}) {
   const [email, setEmail] = useState(userData.email);
   const [cardNumber, setCardNumber] = useState(userData.cardNumber);
 
-  const changeProfile = () => {
-    const userData = {
-      name,
-      burthDate,
-      telNumber,
-      email,
-      cardNumber,
-    };
-    console.log("User Data:", userData);
+  const changeProfile = async () => {
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    }
+    const data = new FormData();
+    if (image !== "") {
+      let filename = image.split('/').pop();
+
+      // Infer the type of the image
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      data.append('avatar', { uri: image, name: filename, type });
+    }
+    
+    
+    data.append("email", email)
+    data.append("name", name)
+    data.append("god", burthDate)
+    data.append("phone", telNumber)
+    data.append("cardNumber", cardNumber)
+    
+    // const data = {
+    //   email: email,
+    //   name: name,
+    //   god: burthDate,
+    //   phone: telNumber,
+    //   cardNumber
+    // }
+    
+    //console.log(...data);
+    try {
+      await axios.post(`http://192.168.0.106:1000/api/user/redact/${userData._id}`, data, {headers: headers}).then(res => {
+        // console.log(res)
+
+        // if (res.data.message == "такое мыло уже есть") {
+        //   console.warn("Аккаунт с такой почтой уже зарегистрирован");
+        // }
+        // else {
+        //   // Clear the input fields after printing to the console
+        //   storeData(userData)
+        //   setUserData(userData)
+
+        //   setName("");
+        //   setPhone("");
+        //   setEmail("");
+        //   setGod("");
+        //   setCardNumber("");
+        //   setPassword("");
+        //   setConfirmPassword("");
+        // }
+      }).catch((e) => console.log(e.message))
+    }
+    catch (e) {
+      console.log(e);
+    }
+
+
+    // const userData = {
+    //   name,
+    //   burthDate,
+    //   telNumber,
+    //   email,
+    //   cardNumber,
+    // };
+    // console.log("User Data:", userData);
   };
 
   const toggleEdit = () => {
@@ -72,18 +134,7 @@ export default function Profile({userData}) {
         <View style={styles.profile_container}>
           <View style={styles.image_with_items}>
             <View style={styles.image_container}>
-              {profile_info.photo ? (
-                <Image
-                  source={{ uri: profile_info.photo }}
-                  style={{
-                    width: 150,
-                    height: 150,
-                    borderRadius: 99,
-                    backgroundColor: Colors.dark_gray,
-                  }}
-                />
-              ) : (
-                <TouchableOpacity
+              <TouchableOpacity
                   style={{
                     width: 150,
                     height: 150,
@@ -93,6 +144,17 @@ export default function Profile({userData}) {
                   }}
                   onPress={() => uploadImage()}
                 >
+                {image !== "" ? (
+                  <Image
+                  source={{ uri: image }}
+                  style={{
+                    width: 150,
+                    height: 150,
+                    borderRadius: 99,
+                    backgroundColor: Colors.dark_gray,
+                  }}
+                />
+                ) : (
                   <Text
                     style={{
                       fontFamily: "appFontBold",
@@ -100,10 +162,11 @@ export default function Profile({userData}) {
                       textAlign: "center",
                     }}
                   >
-                    Загрузите изображение
+                    {editable ? "Загрузите изображение" : ""}
                   </Text>
-                </TouchableOpacity>
-              )}
+                )}
+                
+              </TouchableOpacity>
             </View>
             <View style={styles.items_near_image}>
               <TextInput

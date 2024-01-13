@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import LoginBottomSheet from "../Components/LogScreen/LoginBottomSheet";
 import SignUpBottomSheet from "../Components/LogScreen/SignUpBottomSheet";
 
-export default function Login() {
+export default function Login({setUserData}) {
   const bottomSheetLogin = useRef(null);
   const bottomSheetSignUp = useRef(null);
 
@@ -46,6 +46,7 @@ export default function Login() {
               bottomSheetLogin={bottomSheetLogin}
               index={0}
               snapPoints={snapPoints}
+              setUserData={setUserData}
             />
 
             <Button
@@ -56,6 +57,7 @@ export default function Login() {
               bottomSheetSignUp={bottomSheetSignUp}
               index={1}
               snapPoints={snapPoints}
+              setUserData={setUserData}
             />
           </View>
         </View>
