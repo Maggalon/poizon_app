@@ -31,7 +31,7 @@ export default function App() {
   
   const removeValue = async () => {
     try {
-      await AsyncStorage.removeItem('user_data')
+      await AsyncStorage.removeItem('basket')
     } catch(e) {
       // remove error
       console.log(e)

@@ -15,7 +15,9 @@ export default function Good({basket, setBasket}) {
   const [n, setN] = useState(0)
 
   useEffect(() => {
-    console.log(basket);
+    if (!basket) {
+      basket = []
+    }
     for (let i = 0; i < basket.length; i++) {
       if (basket[i] == item) {
         //isInBasket = true;
