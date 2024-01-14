@@ -31,6 +31,7 @@ export default function Header({goods}) {
           title={"Найти"}
           width={"25%"}
           onPress={handleSearchInput}
+          active_opacity = {2}
         />
       </View>
     </View>

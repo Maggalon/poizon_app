@@ -18,7 +18,7 @@ export default function Buy() {
     return sum;
   };
   function showToast() {
-    ToastAndroid.show("Вы стали чуть чуть красивее!", ToastAndroid.SHORT);
+    ToastAndroid.show("Вы стали чуть-чуть красивее!", ToastAndroid.SHORT);
   }
   const renderItem = ({ item, index }) => {
     return (
@@ -38,11 +38,7 @@ export default function Buy() {
       </View>
       <View style={styles.order_view}>
         <Text style={styles.title}>Ваш заказ</Text>
-        {itemList.length == 1 ? (
-          <Text style={styles.count_goods}> {itemList.length} позиция</Text>
-        ) : (
-          <Text style={styles.count_goods}> {itemList.length} позиций</Text>
-        )}
+        
       </View>
       <View style={{ width: "90%", flexDirection: 'column', marginTop: 10 }}>
         <View style={styles.order_view}>
@@ -104,6 +100,7 @@ const styles = StyleSheet.create({
   good_label: {
     fontFamily: "appFont",
     fontSize: 17,
+    maxWidth: '77%'
   },
   good_price: {
     fontFamily: "appFontBold",

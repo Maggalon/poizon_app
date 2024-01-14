@@ -31,7 +31,7 @@ export default function App() {
   
   const removeValue = async () => {
     try {
-      await AsyncStorage.removeItem('user_data')
+      await AsyncStorage.removeItem('basket')
     } catch(e) {
       // remove error
       console.log(e)
@@ -59,7 +59,7 @@ export default function App() {
 
   const getCategories = async () => {
     try {
-      await axios.get("http://192.168.0.106:1000/api/all-categories").then(res => {
+      await axios.get("http://192.168.0.28:1000/api/all-categories").then(res => {
         console.log(res.data);
         setCategories(res.data)
         
@@ -81,7 +81,7 @@ export default function App() {
 
   const getGoods = async () => {
     try {
-      await axios.get("http://192.168.0.106:1000/api/all-products").then(res => {
+      await axios.get("http://192.168.0.28:1000/api/all-products").then(res => {
         //console.log(res);
         
         setGoods(res.data.map(item => {
@@ -90,7 +90,7 @@ export default function App() {
           item.file = item.file.replace("\\", "/")
           return {
             id: item.id,
-            image: `http://192.168.0.106:1000/${item.file}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
+            image: `http://192.168.0.28:1000/${item.file}`, // require(`../../../server/${item.file.replace("\\", "/")}`)
             label: item.name,
             rate: item.rating,
             price: item.price + "₽",

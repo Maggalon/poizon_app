@@ -85,7 +85,7 @@ export default function Profile({userData}) {
     
     //console.log(...data);
     try {
-      await axios.post(`http://192.168.0.106:1000/api/user/redact/${userData._id}`, data, {headers: headers}).then(res => {
+      await axios.post(`http://192.168.0.28:1000/api/user/redact/${userData._id}`, data, {headers: headers}).then(res => {
         // console.log(res)
 
         // if (res.data.message == "такое мыло уже есть") {

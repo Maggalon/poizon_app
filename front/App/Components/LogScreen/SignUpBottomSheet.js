@@ -55,7 +55,7 @@ export default function SignUpBottomSheet({
       console.log("User Data:", userData);
       
       try {
-        await axios.post("http://192.168.0.106:1000/api/user/registration", userData).then(res => {
+        await axios.post("http://192.168.0.28:1000/api/user/registration", userData).then(res => {
           console.log(res.data.message)
           if (res.data.message == "такое мыло уже есть") {
             console.warn("Аккаунт с такой почтой уже зарегистрирован");

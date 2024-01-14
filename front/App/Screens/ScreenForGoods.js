@@ -7,7 +7,7 @@ export default function ScreenForGoods() {
   const param = useRoute().params;
   goods = param?.goods
   return (
-    <View>
+    <View >
       <GoodList goodsList={goods} title={param?.title}/>
     </View>
   )

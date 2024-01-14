@@ -1,13 +1,19 @@
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import Star from "../../assets/star-for-rate.svg";
 import SmallButton from "../Components/SmallButton";
-import Colors from '../../assets/Shared/Colors';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from "../../assets/Shared/Colors";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-export default function Basket({basket}) {
+export default function Basket({ basket }) {
   //const [allGoods, setAllGoods] = useState(basket)
   //console.log('from basket' + allGoods);
   //console.log('from basket');
@@ -20,7 +26,7 @@ export default function Basket({basket}) {
   //     // error reading value
   //     console.log(e);
   //   }
-    
+
   // };
 
   // const removeValue = async () => {
@@ -30,7 +36,7 @@ export default function Basket({basket}) {
   //     // remove error
   //     console.log(e)
   //   }
-  
+
   //   console.log('Done.')
   // }
   // useFocusEffect(() => {
@@ -39,14 +45,13 @@ export default function Basket({basket}) {
   // })
   // useEffect(() => {
   //   console.log('render');
-    
+
   //   //removeValue()
   // }, [])
 
-  
   const buyItems = () => {
     console.log("вы счастливый обладатель одежды");
-    navigation.navigate("Buy", {itemList: basket})
+    navigation.navigate("Buy", { itemList: basket });
   };
   const navigation = useNavigation();
   const renderItem = ({ item, index }) => {
@@ -73,11 +78,18 @@ export default function Basket({basket}) {
       <View>
         <Text style={styles.price_text}>{item.price}</Text>
       </View>
-    )
+    );
   } else {
     return (
-      <View style={{alignItems: 'center', margin: 12}}>
-        <FlatList data={basket} renderItem={renderItem} numColumns={1} showsVerticalScrollIndicator={false}/>
+      <View style={{ alignItems: "center", margin: 12,}}>
+        <FlatList
+          data={basket}
+          renderItem={renderItem}
+          numColumns={1}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={<View></View>}
+          ListFooterComponentStyle={{paddingBottom:55}}
+        />
         <View
           style={{
             width: "100%",
@@ -89,25 +101,23 @@ export default function Basket({basket}) {
           <SmallButton title={"Купить"} width={"65%"} onPress={buyItems} />
         </View>
       </View>
-    )
+    );
   }
-
-  
 }
 
 const styles = StyleSheet.create({
   good_item: {
     alignItems: "center",
     backgroundColor: Colors.white,
-    justifyContent:'center',
+    justifyContent: "center",
     height: "auto",
     borderRadius: 10,
     margin: 8,
     padding: 15,
     overflow: "scroll",
-    display:'flex',
-    flexDirection: 'row',
-    gap: 20
+    display: "flex",
+    flexDirection: "row",
+    gap: 20,
   },
   image_for_good: {
     width: 120,

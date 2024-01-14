@@ -26,7 +26,9 @@ export default function GoodList({ goodsList, title }) {
       >
         <Image source={{ uri: item.image }} style={styles.image_for_good} />
         <View style={{ width: "90%", display: "flex", gap: 2 }}>
-          <Text style={styles.label_text}>{item.label.slice(0, 35) + "..."}</Text>
+          <Text style={styles.label_text}>
+            {item.label.slice(0, 35) + "..."}
+          </Text>
           <View style={styles.rate_view}>
             <Star />
             <Text style={styles.rate_text}>{item.rate}</Text>
@@ -46,12 +48,19 @@ export default function GoodList({ goodsList, title }) {
 
   return (
     <View style={{ alignItems: "center", margin: 10 }}>
-      {title ? (
-        <View style={{width: '95%'}}>
-          <Text style={styles.search_results}>{title}</Text>
-        </View>
-      ) : null}
-      <FlatList data={goodsList} renderItem={renderItem} numColumns={2} />
+      <FlatList
+        ListHeaderComponent={
+          title ? (
+            <View style={{ width: "90%", marginBottom: 3, marginLeft: 6 }}>
+              <Text style={styles.search_results}>{title}</Text>
+            </View>
+          ) : null
+        }
+        data={goodsList}
+        renderItem={renderItem}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
