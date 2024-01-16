@@ -6,6 +6,7 @@ import Colors from "../../assets/Shared/Colors";
 import SmallButton from "../Components/SmallButton";
 
 export default function Buy() {
+  
   const param = useRoute().params;
   const itemList = param?.itemList;
   const getAllPrice = (itemList) => {

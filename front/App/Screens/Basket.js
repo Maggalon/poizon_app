@@ -12,6 +12,7 @@ import SmallButton from "../Components/SmallButton";
 import Colors from "../../assets/Shared/Colors";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PlusMinus from "../Components/PlusMinus";
 
 export default function Basket({ basket }) {
   //const [allGoods, setAllGoods] = useState(basket)
@@ -53,6 +54,7 @@ export default function Basket({ basket }) {
     console.log("вы счастливый обладатель одежды");
     navigation.navigate("Buy", { itemList: basket });
   };
+
   const navigation = useNavigation();
   const renderItem = ({ item, index }) => {
     return (
@@ -67,7 +69,10 @@ export default function Basket({ basket }) {
             <Star />
             <Text style={styles.rate_text}>{item.rate}</Text>
           </View>
-          <Text style={styles.price_text}>{item.price}</Text>
+          <View>
+            <Text style={styles.price_text}>{item.price}</Text>
+          </View>
+          <PlusMinus item={item} onPressForSub={()=>{}} onPressForAdd={()=>{}}/>
         </View>
       </TouchableOpacity>
     );
@@ -81,14 +86,14 @@ export default function Basket({ basket }) {
     );
   } else {
     return (
-      <View style={{ alignItems: "center", margin: 12,}}>
+      <View style={{ alignItems: "center", margin: 12 }}>
         <FlatList
           data={basket}
           renderItem={renderItem}
           numColumns={1}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={<View></View>}
-          ListFooterComponentStyle={{paddingBottom:55}}
+          ListFooterComponentStyle={{ paddingBottom: 55 }}
         />
         <View
           style={{
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
   },
   image_for_good: {
     width: 120,
-    height: 120,
+    height: 165,
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
@@ -141,10 +146,11 @@ const styles = StyleSheet.create({
   },
   price_text: {
     fontFamily: "appFontBold",
-    fontSize: 16,
+    fontSize: 17,
   },
   search_results: {
     fontFamily: "appFontBold",
     fontSize: 28,
   },
+
 });

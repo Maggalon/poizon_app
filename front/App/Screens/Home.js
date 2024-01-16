@@ -5,6 +5,7 @@ import GoodList from '../Components/Home/GoodList'
 import axios from 'axios'
 
 export default function Home({allGoods}) {
+  
 
   // const [allGoods, setAllGoods] = useState([])
 

@@ -12,8 +12,9 @@ import Colors from "../../assets/Shared/Colors";
 import SmallButton from "../Components/SmallButton";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
+import ExitButton from "../Components/ExitButton";
 
-export default function Profile({userData}) {
+export default function Profile({ userData }) {
   //console.log("from profile", userData._id)
   const profile_info = {
     name: userData.name,
@@ -38,7 +39,7 @@ export default function Profile({userData}) {
         });
         if (!result.canceled) {
           let localUri = result.assets[0].uri;
-          setImage(localUri)
+          setImage(localUri);
         }
       } catch (error) {
         alert("Ошибка при загрузке картинки: " + error.message);
@@ -53,28 +54,26 @@ export default function Profile({userData}) {
   const [cardNumber, setCardNumber] = useState(userData.cardNumber);
 
   const changeProfile = async () => {
-
     const headers = {
-      'Content-Type': 'multipart/form-data',
-    }
+      "Content-Type": "multipart/form-data",
+    };
     const data = new FormData();
     if (image !== "") {
-      let filename = image.split('/').pop();
+      let filename = image.split("/").pop();
 
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
 
-      data.append('avatar', { uri: image, name: filename, type });
+      data.append("avatar", { uri: image, name: filename, type });
     }
-    
-    
-    data.append("email", email)
-    data.append("name", name)
-    data.append("god", burthDate)
-    data.append("phone", telNumber)
-    data.append("cardNumber", cardNumber)
-    
+
+    data.append("email", email);
+    data.append("name", name);
+    data.append("god", burthDate);
+    data.append("phone", telNumber);
+    data.append("cardNumber", cardNumber);
+
     // const data = {
     //   email: email,
     //   name: name,
@@ -82,34 +81,37 @@ export default function Profile({userData}) {
     //   phone: telNumber,
     //   cardNumber
     // }
-    
+
     //console.log(...data);
     try {
-      await axios.post(`http://192.168.0.28:1000/api/user/redact/${userData._id}`, data, {headers: headers}).then(res => {
-        // console.log(res)
-
-        // if (res.data.message == "такое мыло уже есть") {
-        //   console.warn("Аккаунт с такой почтой уже зарегистрирован");
-        // }
-        // else {
-        //   // Clear the input fields after printing to the console
-        //   storeData(userData)
-        //   setUserData(userData)
-
-        //   setName("");
-        //   setPhone("");
-        //   setEmail("");
-        //   setGod("");
-        //   setCardNumber("");
-        //   setPassword("");
-        //   setConfirmPassword("");
-        // }
-      }).catch((e) => console.log(e.message))
-    }
-    catch (e) {
+      await axios
+        .post(
+          `http://192.168.0.28:1000/api/user/redact/${userData._id}`,
+          data,
+          { headers: headers }
+        )
+        .then((res) => {
+          // console.log(res)
+          // if (res.data.message == "такое мыло уже есть") {
+          //   console.warn("Аккаунт с такой почтой уже зарегистрирован");
+          // }
+          // else {
+          //   // Clear the input fields after printing to the console
+          //   storeData(userData)
+          //   setUserData(userData)
+          //   setName("");
+          //   setPhone("");
+          //   setEmail("");
+          //   setGod("");
+          //   setCardNumber("");
+          //   setPassword("");
+          //   setConfirmPassword("");
+          // }
+        })
+        .catch((e) => console.log(e.message));
+    } catch (e) {
       console.log(e);
     }
-
 
     // const userData = {
     //   name,
@@ -135,25 +137,25 @@ export default function Profile({userData}) {
           <View style={styles.image_with_items}>
             <View style={styles.image_container}>
               <TouchableOpacity
-                  style={{
-                    width: 150,
-                    height: 150,
-                    borderRadius: 99,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                  onPress={() => uploadImage()}
-                >
+                style={{
+                  width: 150,
+                  height: 150,
+                  borderRadius: 99,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={() => uploadImage()}
+              >
                 {image !== "" ? (
                   <Image
-                  source={{ uri: image }}
-                  style={{
-                    width: 150,
-                    height: 150,
-                    borderRadius: 99,
-                    backgroundColor: Colors.dark_gray,
-                  }}
-                />
+                    source={{ uri: image }}
+                    style={{
+                      width: 150,
+                      height: 150,
+                      borderRadius: 99,
+                      backgroundColor: Colors.dark_gray,
+                    }}
+                  />
                 ) : (
                   <Text
                     style={{
@@ -165,7 +167,6 @@ export default function Profile({userData}) {
                     {editable ? "Загрузите изображение" : ""}
                   </Text>
                 )}
-                
               </TouchableOpacity>
             </View>
             <View style={styles.items_near_image}>
@@ -218,17 +219,25 @@ export default function Profile({userData}) {
           <View
             style={{
               width: "100%",
-              alignItems: "center",
               position: "absolute",
               top: "98%",
+              display: "flex",
+              flexDirection: "row",
             }}
           >
             <SmallButton
               onPress={() => {
                 toggleEdit();
               }}
-              title={editable ? "Сохранить" : "Изменить профиль"}
-              width="66%"
+              title={editable ? "Сохранить" : "Изменить"}
+              width="50%"
+            />
+            <ExitButton
+            onPress={() => {
+              
+            }}
+              title={"Выйти"}
+              width={"50%"}
             />
           </View>
         </View>
@@ -241,14 +250,11 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-end",
     height: "100%",
   },
   profile_container: {
-    height: "70%",
+    height: "100%",
     backgroundColor: Colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     display: "flex",
     alignItems: "center",
     padding: 25,

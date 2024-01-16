@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../Screens/Home";
@@ -10,18 +11,26 @@ import SearchActive from "../../assets/active-icons/search-active.svg";
 import HomeActive from "../../assets/active-icons/home-active.svg";
 import ProfileActive from "../../assets/active-icons/profile-active.svg";
 import Colors from "../../assets/Shared/Colors";
-import HomeInactive from '../../assets/inactive-icons/home-inactive.svg'
-import SeacrhInactive from '../../assets/inactive-icons/search-inactive.svg'
-import BasketInactive from '../../assets/inactive-icons/basket-inactive.svg'
-import ProfileInactive from '../../assets/inactive-icons/profile-inactive.svg'
-import SearchHeader from '../Components/SearchScreen/SearchHeader'
+import HomeInactive from "../../assets/inactive-icons/home-inactive.svg";
+import SeacrhInactive from "../../assets/inactive-icons/search-inactive.svg";
+import BasketInactive from "../../assets/inactive-icons/basket-inactive.svg";
+import ProfileInactive from "../../assets/inactive-icons/profile-inactive.svg";
 import HomeStackNavigation from "./HomeStackNavigation";
 import SeacrhStackNavigation from "./SearchStackNavigation";
 import BasketStackNavigation from "./BasketStackNavigation";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation({userData, basket, setBasket, categories, goods}) {
+export default function TabNavigation({
+  userData,
+  basket,
+  setBasket,
+  categories,
+  goods,
+}) {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -40,43 +49,62 @@ export default function TabNavigation({userData, basket, setBasket, categories, 
           borderBottomRightRadius: 20,
           height: 100,
         },
-        headerTitleStyle:{
+        headerTitleStyle: {
           color: Colors.white,
-          fontFamily: 'appFontBold',
+          fontFamily: "appFontBold",
           fontSize: 25,
-          paddingLeft: 20,
-        }
+          paddingLeft: 7,
+        },
       }}
     >
       <Tab.Screen
         name="Home"
-        children={() => <HomeStackNavigation basket={basket} setBasket={setBasket} goods={goods} />}
+        children={() => (
+          <HomeStackNavigation
+            basket={basket}
+            setBasket={setBasket}
+            goods={goods}
+          />
+        )}
         options={{
-          tabBarIcon: (tabInfo) => (tabInfo.focused ? <HomeActive /> : <HomeInactive/>),
+          headerShown: false,
+          tabBarIcon: (tabInfo) =>
+            tabInfo.focused ? <HomeActive /> : <HomeInactive />,
         }}
       />
       <Tab.Screen
         name="Search"
-        children={() => <SeacrhStackNavigation basket={basket} setBasket={setBasket} categories={categories} goods={goods} />}
+        children={() => (
+          <SeacrhStackNavigation
+            basket={basket}
+            setBasket={setBasket}
+            categories={categories}
+            goods={goods}
+          />
+        )}
         options={{
-          tabBarIcon: (tabInfo) => (tabInfo.focused ? <SearchActive /> : <SeacrhInactive/>),
-          header: ({}) => {
-            return <SearchHeader goods={goods} />;
-          },
+          tabBarIcon: (tabInfo) =>
+            tabInfo.focused ? <SearchActive /> : <SeacrhInactive />,
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="Basket"
-        children={() => <BasketStackNavigation basket={basket} setBasket={setBasket} />}
+        children={() => (
+          <BasketStackNavigation basket={basket} setBasket={setBasket} />
+        )}
         options={{
-          tabBarIcon: (tabInfo) => (tabInfo.focused ? <BasketActive /> : <BasketInactive/>),
+          headerShown: false,
+          tabBarIcon: (tabInfo) =>
+            tabInfo.focused ? <BasketActive /> : <BasketInactive />,
         }}
       />
       <Tab.Screen
         name="Profile"
         children={() => <Profile userData={userData} />}
         options={{
-          tabBarIcon: (tabInfo) => (tabInfo.focused ? <ProfileActive /> : <ProfileInactive/>),
+          tabBarIcon: (tabInfo) =>
+            tabInfo.focused ? <ProfileActive /> : <ProfileInactive />,
         }}
       />
     </Tab.Navigator>

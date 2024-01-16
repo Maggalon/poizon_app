@@ -6,3 +6,4 @@ export default {
   gray: "#F2F2F2",
   dark_gray: '#a0a0a0',
 }
+

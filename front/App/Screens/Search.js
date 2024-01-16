@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import Grid from "@react-css/grid";
 import React, { useState, useEffect } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Colors from "../../assets/Shared/Colors";
@@ -85,6 +84,7 @@ const Category = ({
 };
 
 export default function Search({ categories, op, handlerFunction, goods }) {
+  
   const param = useRoute().params;
   sexName = param?.sexName;
   if (sexName) {
@@ -178,24 +178,22 @@ export default function Search({ categories, op, handlerFunction, goods }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2, // the number of columns you want to devide the screen into
-    //marginHorizontal: "auto",
-    width: windowWidth,
+    marginLeft: 10,
+    width: "95%",
   },
   background_image: {
-    width: 160,
-    height: 160,
+    width: 180,
+    height: 180,
   },
   category_style: {
     flex: 1,
-    maxWidth: "46.5%", // 100% devided by the number of rows you want
+    maxWidth: "46.5%",
     alignItems: "center",
-    margin: 8,
+    margin: 7,
   },
   category_name: {
     fontFamily: "appFont",
-    fontSize: 20,
+    fontSize: 21,
     color: Colors.white,
-    //margin: 10
   },
 });
